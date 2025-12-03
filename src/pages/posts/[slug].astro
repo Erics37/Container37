@@ -1,12 +1,21 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { getPostBySlug } from "../../lib/ghost";
+import { getAllPosts, getPostBySlug } from "../../lib/ghost";
+
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();   // Ghost API: fetch all posts
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
 
 const { slug } = Astro.params;
 const post = await getPostBySlug(slug);
 
 if (!post) {
-  throw Astro.redirect('/404');
+  return new Response(null, { status: 404 });
 }
 ---
 

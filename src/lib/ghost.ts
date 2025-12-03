@@ -40,3 +40,11 @@ export async function getPostBySlug(slug) {
   return data.posts[0];
 }
 
+export async function getAllPosts() {
+  const url = `${GHOST_API_URL}/posts/?key=${GHOST_CONTENT_KEY}&limit=all`;
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.posts;
+}
+
+

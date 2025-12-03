@@ -3,7 +3,7 @@ import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({  
   site: "https://37orbit.com",
-  output: "server",
+  output: "static",
   integrations: [tailwind({applyBaseStyles: true
   })],
 });
