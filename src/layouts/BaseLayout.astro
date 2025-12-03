@@ -1,0 +1,94 @@
+---
+import "../styles/global.css";
+import NavBar from '../components/NavBar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "ORBIT Blog", description = "A minimalist personal blog." } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/src/styles/global.css">
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    
+    <style is:global>
+      :root {
+        --c-bg: #09090b; /* 深色背景 */
+        --c-text: #e4e4e7; /* 浅灰文字 */
+        --c-accent: #FF791B; /* 橙色点缀 */
+        --c-border: #27272a;
+        --c-glass: rgba(9, 9, 11, 0.7);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, sans-serif;
+        background-color: var(--c-bg);
+        color: var(--c-text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        line-height: 1.6;
+      }
+
+      main {
+        flex: 1;
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+        position: relative;
+      }
+
+      /* 滚动条美化 */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--c-bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #3f3f46;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--c-accent);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+      
+      a:hover {
+        color: var(--c-accent);
+      }
+    </style>
+  </head>
+  <body>
+    <NavBar />
+    
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

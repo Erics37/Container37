@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPostBySlug } from "../../lib/ghost";
+
+const { slug } = Astro.params;
+const post = await getPostBySlug(slug);
+
+if (!post) {
+  throw Astro.redirect('/404');
+}
+---
+
+<BaseLayout>
+  <article style="max-width: 750px; margin: 0 auto; padding: 2rem;">
+    <h1 style="font-size: 2.2rem; font-weight: bold; margin-bottom: 1rem;">
+      {post.title}
+    </h1>
+
+    {post.feature_image && (
+      <img
+        src={post.feature_image}
+        alt={post.title}
+        style="width: 100%; border-radius: 8px; margin: 1.5rem 0;"
+      />
+    )}
+
+    <p style="color: #888; margin-bottom: 2rem;">
+      {new Date(post.published_at).toLocaleDateString()}
+    </p>
+
+    <div set:html={post.html}></div>
+  </article>
+</BaseLayout>

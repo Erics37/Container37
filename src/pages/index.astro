@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPosts } from '../lib/ghost';
+
+const posts = await getPosts();
+const recentPosts = posts.slice(0, 5);
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>
+        Code.<br />
+        Design.<br />
+        <span class="accent-text">Orbit.</span>
+      </h1>
+      <p class="bio">
+        A minimalist digital garden exploring the boundaries of technology and aesthetics.
+      </p>
+    </div>
+  </section>
+
+  <section class="latest">
+    <div class="header">
+      <h2>Recent Transmissions</h2>
+      <a href="/posts" class="view-all">View Archive &rarr;</a>
+    </div>
+    
+    <div class="post-grid">
+      {recentPosts.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: 6rem 0 4rem;
+    border-bottom: 1px solid var(--c-border);
+    margin-bottom: 4rem;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 10vw, 5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    margin: 0 0 1.5rem 0;
+    color: var(--c-text);
+  }
+
+  .accent-text {
+    color: var(--c-accent);
+  }
+
+  .bio {
+    font-size: 1.125rem;
+    color: #a1a1aa;
+    max-width: 500px;
+    line-height: 1.6;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .view-all {
+    font-size: 0.9rem;
+    color: var(--c-accent);
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+
+  .view-all:hover {
+    opacity: 0.8;
+  }
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .post-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Make the first post span full width for visual impact */
+    .post-grid > :global(:first-child) {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
